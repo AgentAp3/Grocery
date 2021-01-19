@@ -16,6 +16,7 @@ let editID = '';
 form.addEventListener('submit', addItem);
 // clear items
 clearBtn.addEventListener('click', clearItems);
+
 // ****** FUNCTIONS **********
 function addItem(e) {
   e.preventDefault();
@@ -31,13 +32,17 @@ function addItem(e) {
     element.setAttributeNode(attr);
     element.innerHTML = ` <p class="title">${value}</p>
     <div class="btn-container">
-      <button type="button" class="edit btn">
+      <button type="button" class="edit-btn">
         <i class="fas fa-edit"></i>
       </button>
-      <button type="button" class="edit delete">
+      <button type="button" class="delete-btn">
         <i class="fas fa-trash"></i>
       </button>
     </div>`;
+    const deleteBtn = element.querySelector('.delete-btn');
+    const editBtn = element.querySelector('.edit-btn');
+    deleteBtn.addEventListener('click', deleteItem);
+    editBtn.addEventListener('click', editItem);
     // append child
     list.appendChild(element);
     //display alert
@@ -87,9 +92,28 @@ function clearItems() {
   setBackToDefault();
   // localStorage.remove('list')
 }
+//delete function
+function deleteItem(e) {
+  const element = e.currentTarget.parentElement.parentElement;
+  const id = element.dataset.id;
+  list.removeChild(element);
+  if (list.childern === 0) {
+    container.classList.remove('show-container');
+  }
+  displayAlert('item removed', 'danger');
+  setBackToDefault();
+  // remove from local storage
+  // removeFromLocalStorage(id);
+}
+
+//edit function
+function editItem() {
+  console.log('item edit');
+}
 
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id, value) {
-  console.log('added to local storage');
+  //console.log('added to local storage');
 }
+function removeFromLocalStorage(id) {}
 // ****** SETUP ITEMS **********
